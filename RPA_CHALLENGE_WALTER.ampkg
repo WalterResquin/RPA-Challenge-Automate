@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+<PackageConstruct1100 xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ID>{a2f2819b-96f2-40b9-b0b8-27e0e3b7747a}</ID>
+  <ParentID />
+  <Name />
+  <Type>Package</Type>
+  <Path />
+  <Tasks>
+    <anyType xsi:type="TaskConstruct">
+      <ID>{22d3d652-696d-4655-a2be-c319282d0226}</ID>
+      <ParentID>{E893A7FD-2758-4315-9181-93F8728332E5}</ParentID>
+      <Name>CHALLENGE</Name>
+      <Type>Task</Type>
+      <Path />
+      <StartedOn>1900-01-01T00:00:00Z</StartedOn>
+      <EndedOn>1900-01-01T00:00:00Z</EndedOn>
+      <ResultCode>0</ResultCode>
+      <ResultText />
+      <VersionDate>2020-07-12T23:32:12.597Z</VersionDate>
+      <Version>92</Version>
+      <ModifiedOn>2020-07-12T23:33:58.437Z</ModifiedOn>
+      <CreatedOn>2020-07-11T12:18:20.633Z</CreatedOn>
+      <Notes />
+      <CreatedBy>{6AD627E8-373B-4104-81B7-9670A9D2F430}</CreatedBy>
+      <CompletionState>Production</CompletionState>
+      <ExclusionSchedules />
+      <Empty>false</Empty>
+      <Enabled>true</Enabled>
+      <Removed>false</Removed>
+      <LockedBy />
+      <AML>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;AutoMateTask&gt;
+  &lt;TaskInfo&gt;
+    &lt;Version TaskVersion="11.1.30.3" MinVersion="0.0.0.0" AMLVersion="3.0" /&gt;
+  &lt;/TaskInfo&gt;
+  &lt;TaskFunctions&gt;
+    &lt;TaskFunction Name="OnStepStart" Access="private"&gt;
+      &lt;Parameters&gt;
+        &lt;Parameter Name="FunctionName" Description="The function that is starting the step" /&gt;
+        &lt;Parameter Name="StepNumber" Description="The step number that is about to execute" /&gt;
+      &lt;/Parameters&gt;
+    &lt;/TaskFunction&gt;
+    &lt;TaskFunction Name="OnStepEnd" Access="private"&gt;
+      &lt;Parameters&gt;
+        &lt;Parameter Name="FunctionName" Description="The function that is ending the step" /&gt;
+        &lt;Parameter Name="StepNumber" Description="The step number that is about to end" /&gt;
+      &lt;/Parameters&gt;
+    &lt;/TaskFunction&gt;
+    &lt;TaskFunction Name="OnStepError" Access="private"&gt;
+      &lt;Parameters&gt;
+        &lt;Parameter Name="FunctionName" Description="The function with the error" /&gt;
+        &lt;Parameter Name="StepNumber" Description="The step number of the error" /&gt;
+        &lt;Parameter Name="ErrorText" Description="The text of the error" /&gt;
+        &lt;Parameter Name="ErrorCode" Description="The code of the error" /&gt;
+      &lt;/Parameters&gt;
+    &lt;/TaskFunction&gt;
+    &lt;TaskFunction Name="OnTaskFailure" Access="private"&gt;
+      &lt;Parameters&gt;
+        &lt;Parameter Name="FunctionName" Description="The function causing the task failure" /&gt;
+        &lt;Parameter Name="StepNumber" Description="The step number causing the task failure" /&gt;
+        &lt;Parameter Name="ErrorText" Description="The text of the error" /&gt;
+        &lt;Parameter Name="ErrorCode" Description="The code of the error" /&gt;
+      &lt;/Parameters&gt;
+    &lt;/TaskFunction&gt;
+    &lt;TaskFunction Name="OnTaskStart" Access="private"&gt;
+      &lt;Parameters&gt;
+        &lt;Parameter Name="Reason" Description="The reason the task is starting" /&gt;
+      &lt;/Parameters&gt;
+    &lt;/TaskFunction&gt;
+    &lt;TaskFunction Name="OnTaskEnd" Access="private"&gt;
+      &lt;Parameters&gt;
+        &lt;Parameter Name="Reason" Description="The reason the task is ending" /&gt;
+      &lt;/Parameters&gt;
+    &lt;/TaskFunction&gt;
+    &lt;TaskFunction Name="Main" Access="private"&gt;
+      &lt;Steps&gt;
+&lt;!--Autor: Walter Resquin
+ --&gt;
+&lt;!--RPA CHALLENGE
+--&gt;
+&lt;!--Criando Variáveis--&gt;
+&lt;AMVARIABLE NAME="v_Valida" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_Sucesso" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_FirstName" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_LastName" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_Company" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_Role" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_Address" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_Email" VALUE="" /&gt;
+&lt;AMVARIABLE NAME="v_Phone" VALUE="" /&gt;
+&lt;AMBROWSER URL="http://www.rpachallenge.com/" SESSION="BrowserSession1" /&gt;
+&lt;AMBROWSER ACTIVITY="state" SESSION="BrowserSession1" /&gt;
+&lt;AMWINDOW AM_RETRY="3" AM_RETRYDELAY="1000" WINDOWTITLE="Rpa Challenge - Internet Explorer" /&gt;
+&lt;AMWINDOW ACTIVITY="maximize" AM_RETRY="3" AM_RETRYDELAY="500" WINDOWTITLE="Rpa Challenge - Internet Explorer" /&gt;
+&lt;!--Validando site--&gt;
+&lt;AMVARIABLE ACTIVITY="set" VARIABLENAME="v_Sucesso" VALUE="0" /&gt;
+&lt;AMLOOP AM_RETRY="30" AM_RETRYDELAY="500" FROM="1" TO="120" /&gt;
+&lt;AMBROWSER ACTIVITY="getvalue" AM_RETRY="3" AM_RETRYDELAY="500" HTMLTAG="DIV" SESSION="BrowserSession1" RESULTVARIABLE="v_Valida" ATTRIBUTE=":text"&gt;&lt;HTMLATTRIBUTE NAME="className" VALUE="col s12 m12 l9 " /&gt;&lt;/AMBROWSER&gt;
+&lt;AMIF ACTIVITY="contains_text" TEXT="%v_Valida%" SUBSTRING="Instructions" /&gt;
+&lt;AMVARIABLE ACTIVITY="set" VARIABLENAME="v_Sucesso" VALUE="1" /&gt;
+&lt;AMIF ACTIVITY="contains_text" TEXT="%v_Sucesso%" SUBSTRING="1" /&gt;
+&lt;AMSHOWDIALOG MESSAGE="carregou" COUNTDOWNDELAY="2" /&gt;
+&lt;AMBREAK /&gt;
+&lt;AMIF ACTIVITY="end" /&gt;
+&lt;AMIF ACTIVITY="end" /&gt;
+&lt;AMLOOP ACTIVITY="end" /&gt;
+&lt;AMVARIABLE ACTIVITY="set" VARIABLENAME="v_Valida" VALUE="0" /&gt;
+&lt;AMVARIABLE ACTIVITY="set" VARIABLENAME="v_Sucesso" VALUE="0" /&gt;
+&lt;!--Download da planilha &amp; envio para o Dataset--&gt;
+&lt;AMHTTP AM_RETRY="3" AM_RETRYDELAY="500" URL="http://www.rpachallenge.com/assets/downloadFiles/challenge.xlsx" FILE="C:\Users\Administrador\Desktop\planilha\challenge.xlsx" /&gt;
+&lt;AMODS ACTIVITY="get_cell" AM_RETRY="3" AM_RETRYDELAY="500" WORKBOOK="C:\Users\Administrador\Desktop\planilha\challenge.xlsx" ACTION="rangebyreference" RESULTDATASET="ds_challenge" STARTCELLREF="A1" ENDCELLREF="G11" FIRSTROWCOLUMN="YES" WORKSHEET="Sheet1" /&gt;
+&lt;!--Iniciando preenchimento dos campos--&gt;
+&lt;AMBROWSER ACTIVITY="click" AM_RETRY="3" AM_RETRYDELAY="500" HTMLTAG="BUTTON" SESSION="BrowserSession1"&gt;&lt;HTMLATTRIBUTE NAME="type" VALUE="submit" /&gt;&lt;HTMLATTRIBUTE NAME="className" VALUE="waves-effect col s12 m12 l12 btn-large uiColorButton" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMVARIABLE NAME="v_Contador" VALUE="0" /&gt;
+&lt;AMLOOP ACTIVITY="dataset" DATASET="ds_challenge" /&gt;
+&lt;AMVARIABLE ACTIVITY="increment" RESULTVARIABLE="v_Contador" /&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_FirstName"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[First Name]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_LastName"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[Last Name ]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_Company"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[Company Name]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_Role"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[Role in Company]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_Address"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[Address]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_Email"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[Email]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMVARIABLE ACTIVITY="set" AM_RETRY="10" AM_RETRYDELAY="500" VARIABLENAME="v_Phone"&gt;&lt;![CDATA[%ds_challenge(v_Contador).[Phone Number]%]]&gt;&lt;/AMVARIABLE&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_FirstName%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelFirstName" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_LastName%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelLastName" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_Company%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelCompanyName" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_Role%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelRole" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_Address%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelAddress" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_Email%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelEmail" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="setvalue" AM_RETRY="30" AM_RETRYDELAY="500" AM_ONERROR="CONTINUE" HTMLTAG="INPUT" SESSION="BrowserSession1" ATTRIBUTE=":text"&gt;&lt;![CDATA[%v_Phone%]]&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="ng-untouched ng-pristine ng-invalid" /&gt;&lt;HTMLATTRIBUTE NAME="ng-reflect-name" VALUE="labelPhone" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMBROWSER ACTIVITY="click" AM_RETRY="3" AM_RETRYDELAY="500" SESSION="BrowserSession1"&gt;&lt;HTMLATTRIBUTE NAME="class" VALUE="btn uiColorButton" /&gt;&lt;HTMLATTRIBUTE NAME="value" VALUE="Submit" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMLOOP ACTIVITY="end" /&gt;
+&lt;!--Validando se concluiu com sucesso--&gt;
+&lt;AMLOOP AM_RETRY="30" AM_RETRYDELAY="500" FROM="1" TO="120" /&gt;
+&lt;AMBROWSER ACTIVITY="getvalue" AM_RETRY="3" AM_RETRYDELAY="500" HTMLTAG="DIV" SESSION="BrowserSession1" RESULTVARIABLE="v_Valida" ATTRIBUTE=":text"&gt;&lt;HTMLATTRIBUTE NAME="className" VALUE="message1 teal-text text-darken-2" /&gt;&lt;/AMBROWSER&gt;
+&lt;AMIF ACTIVITY="contains_text" TEXT="%v_Valida%" SUBSTRING="Congratulations!" /&gt;
+&lt;AMVARIABLE ACTIVITY="set" VARIABLENAME="v_Sucesso" VALUE="1" /&gt;
+&lt;AMIF ACTIVITY="contains_text" TEXT="%v_Sucesso%" SUBSTRING="1" /&gt;
+&lt;AMSHOWDIALOG MESSAGE="Success!" COUNTDOWNDELAY="2" /&gt;
+&lt;AMBREAK /&gt;
+&lt;AMELSE /&gt;
+&lt;AMSHOWDIALOG MESSAGE="Falha" COUNTDOWNDELAY="2" /&gt;
+&lt;AMIF ACTIVITY="end" /&gt;
+&lt;AMIF ACTIVITY="end" /&gt;
+&lt;AMLOOP ACTIVITY="end" /&gt;
+&lt;AMBROWSER ACTIVITY="close" SESSION="BrowserSession1" /&gt;
+	&lt;/Steps&gt;
+    &lt;/TaskFunction&gt;
+  &lt;/TaskFunctions&gt;
+&lt;/AutoMateTask&gt;</AML>
+    </anyType>
+  </Tasks>
+  <TaskProperties>
+    <anyType xsi:type="TaskPropertiesConstruct">
+      <ID>d6a4ee79-ad7b-469d-b7a4-2ae8650cff0a</ID>
+      <ParentID>{22d3d652-696d-4655-a2be-c319282d0226}</ParentID>
+      <Name />
+      <Type>TaskProperties</Type>
+      <Path />
+      <StartedOn>1900-01-01T00:00:00Z</StartedOn>
+      <EndedOn>1900-01-01T00:00:00Z</EndedOn>
+      <ResultCode>0</ResultCode>
+      <ResultText />
+      <VersionDate>2020-07-11T12:18:20.76Z</VersionDate>
+      <Version>0</Version>
+      <ModifiedOn>2020-07-11T12:18:20.76Z</ModifiedOn>
+      <CreatedOn>2020-07-11T12:18:20.76Z</CreatedOn>
+      <Notes />
+      <CreatedBy>{6AD627E8-373B-4104-81B7-9670A9D2F430}</CreatedBy>
+      <CompletionState>InDevelopment</CompletionState>
+      <ExclusionSchedules />
+      <Empty>false</Empty>
+      <Enabled>true</Enabled>
+      <Removed>false</Removed>
+      <LockedBy />
+      <OnLogoff>DoNotRun</OnLogoff>
+      <OnLogged>LoggedonUser</OnLogged>
+      <OnLocked>LoggedonUser</OnLocked>
+      <UseLogonDefault>true</UseLogonDefault>
+      <LogonUsername>!#!ENCRYPTED!#!yyf2Xa8HDWwfXsL5Xr/eRQ==</LogonUsername>
+      <LogonPassword>!#!ENCRYPTED!#!5lR1Kq4MfQcw+7y2fqrJqQ==</LogonPassword>
+      <LogonDomain />
+      <LogonPropertiesSpecified>true</LogonPropertiesSpecified>
+      <LogonPropertiesInheritancePath />
+      <ConcurrencyType>AlwaysRun</ConcurrencyType>
+      <PriorityAction>Queue</PriorityAction>
+      <PriorityWaitTimeOut>0</PriorityWaitTimeOut>
+      <TaskFailureAction>Fail</TaskFailureAction>
+      <CanStopTask>false</CanStopTask>
+      <TaskExecutionSpeed>0</TaskExecutionSpeed>
+      <PriorityPropertiesSpecified>false</PriorityPropertiesSpecified>
+      <PriorityPropertiesInheritancePath />
+      <ErrorNotifyEmailToAddress />
+      <ErrorNotifyEmailFromAddress />
+      <ErrorRunTaskName />
+      <ErrorNotificationPropertiesSpecified>false</ErrorNotificationPropertiesSpecified>
+      <ErrorNotificationPropertiesInheritancePath />
+      <Constants />
+      <RunAsElevated>false</RunAsElevated>
+      <ExecutionPropertiesSpecified>false</ExecutionPropertiesSpecified>
+      <ExecutionPropertiesInheritancePath />
+      <IsolationOverride>Default</IsolationOverride>
+      <IsolationPropertiesSpecified>false</IsolationPropertiesSpecified>
+      <IsolationPropertiesInheritancePath />
+      <MaxTaskInstances>-1</MaxTaskInstances>
+      <TaskTimeout>-1</TaskTimeout>
+    </anyType>
+  </TaskProperties>
+  <Triggers />
+  <TriggerProperties />
+  <WorkFlows>
+    <anyType xsi:type="WorkFlowConstruct">
+      <ID>{a4efb2b9-50aa-4cf3-a95f-1bf42e012169}</ID>
+      <ParentID>{589D12C2-1282-4466-B7E3-FE547509AF31}</ParentID>
+      <Name>RPA_CHALLENGE_WALTER</Name>
+      <Type>WorkFlow</Type>
+      <Path />
+      <StartedOn>1900-01-01T00:00:00Z</StartedOn>
+      <EndedOn>1900-01-01T00:00:00Z</EndedOn>
+      <ResultCode>0</ResultCode>
+      <ResultText />
+      <VersionDate>2020-07-12T23:30:11.377Z</VersionDate>
+      <Version>7</Version>
+      <ModifiedOn>2020-07-12T23:33:59.25Z</ModifiedOn>
+      <CreatedOn>2020-07-11T12:18:20.82Z</CreatedOn>
+      <Notes />
+      <CreatedBy>{6AD627E8-373B-4104-81B7-9670A9D2F430}</CreatedBy>
+      <CompletionState>Production</CompletionState>
+      <ExclusionSchedules />
+      <Empty>false</Empty>
+      <Enabled>true</Enabled>
+      <Removed>false</Removed>
+      <LockedBy />
+      <Triggers />
+      <Items>
+        <anyType xsi:type="WorkFlowItemConstruct">
+          <ID>{b80780fe-2b83-4c38-baa7-4bce490d8d5b}</ID>
+          <ParentID />
+          <Name />
+          <Type>WorkflowItem</Type>
+          <Path />
+          <WorkflowID>{a4efb2b9-50aa-4cf3-a95f-1bf42e012169}</WorkflowID>
+          <ConstructID>{22d3d652-696d-4655-a2be-c319282d0226}</ConstructID>
+          <AgentID>{CC3AD52F-C1DC-4d24-B6BE-32467159C86C}</AgentID>
+          <ConstructType>Task</ConstructType>
+          <Enabled>true</Enabled>
+          <UseLabel>false</UseLabel>
+          <Label />
+          <X>-28</X>
+          <Y>33</Y>
+          <Width>12</Width>
+          <Height>12</Height>
+        </anyType>
+      </Items>
+      <Links />
+      <Variables />
+      <ZoomFactor>100</ZoomFactor>
+      <LinkType>Bent</LinkType>
+    </anyType>
+  </WorkFlows>
+  <WorkFlowProperties />
+  <Folders />
+  <ItemPermissions />
+  <Processes />
+  <WorkflowItemProperties />
+  <Exclusions />
+</PackageConstruct1100>
